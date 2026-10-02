@@ -18,15 +18,26 @@
                             800: '#0369a1',
                             900: '#0f172a',
                         }
+                    },
+                    fontFamily: {
+                        janna: ['"Janna LT"', '"Cairo"', 'sans-serif'],
                     }
                 }
             }
         }
     </script>
+    <!-- Google Fonts / Janna LT Simulation via Cairo or local font link -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { font-family: system-ui, -apple-system, sans-serif; background-color: #f8fafc; }
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
+        body { 
+            font-family: 'Janna LT', 'Cairo', system-ui, -apple-system, sans-serif; 
+            background-color: #f8fafc; 
+            text-align: right; 
+            direction: rtl; 
+        }
         .pro-card {
             background: #ffffff;
             border: 1px solid #e2e8f0;
@@ -101,10 +112,10 @@
             <div class="pro-card p-4 rounded-2xl flex flex-wrap items-center justify-between gap-4">
                 <div class="flex items-center space-x-3 space-x-reverse">
                     <span class="text-xs font-bold text-slate-600 bg-slate-100 px-3.5 py-2 rounded-xl border border-slate-200 flex items-center gap-1.5">
-                        <i class="fa-solid fa-calendar-days text-sky-600"></i> السنة: <span class="text-slate-900 font-extrabold">2026</span>
+                        <i class="fa-solid fa-calendar-days text-sky-600"></i> السنة: <span class="text-slate-900 font-extrabold mr-1">2026</span>
                     </span>
                     <span class="text-xs font-bold text-slate-600 bg-slate-100 px-3.5 py-2 rounded-xl border border-slate-200 flex items-center gap-1.5">
-                        <i class="fa-solid fa-filter text-sky-600"></i> الفترات: <span class="text-slate-900 font-extrabold">جميع الأرباع</span>
+                        <i class="fa-solid fa-filter text-sky-600"></i> الفترات: <span class="text-slate-900 font-extrabold mr-1">جميع الأرباع</span>
                     </span>
                 </div>
                 <div class="flex items-center space-x-2 space-x-reverse">
@@ -120,7 +131,7 @@
             <!-- 1. المربعات الإحصائية الأربعة في الأعلى -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 
-                <div class="pro-card p-5 rounded-2xl relative overflow-hidden">
+                <div class="pro-card p-5 rounded-2xl relative overflow-hidden text-right">
                     <div class="absolute top-0 right-0 w-1.5 h-full bg-sky-600"></div>
                     <div class="flex items-center justify-between mb-3">
                         <span class="text-xs font-bold text-slate-500 tracking-wider">إجمالي المؤشرات الفعالة</span>
@@ -134,7 +145,7 @@
                     </div>
                 </div>
 
-                <div class="pro-card p-5 rounded-2xl relative overflow-hidden">
+                <div class="pro-card p-5 rounded-2xl relative overflow-hidden text-right">
                     <div class="absolute top-0 right-0 w-1.5 h-full bg-emerald-500"></div>
                     <div class="flex items-center justify-between mb-3">
                         <span class="text-xs font-bold text-slate-500 tracking-wider">حقق المستهدف (Target)</span>
@@ -148,7 +159,7 @@
                     </div>
                 </div>
 
-                <div class="pro-card p-5 rounded-2xl relative overflow-hidden">
+                <div class="pro-card p-5 rounded-2xl relative overflow-hidden text-right">
                     <div class="absolute top-0 right-0 w-1.5 h-full bg-amber-500"></div>
                     <div class="flex items-center justify-between mb-3">
                         <span class="text-xs font-bold text-slate-500 tracking-wider">يحتاج متابعة وتدخل</span>
@@ -162,7 +173,7 @@
                     </div>
                 </div>
 
-                <div class="pro-card p-5 rounded-2xl relative overflow-hidden">
+                <div class="pro-card p-5 rounded-2xl relative overflow-hidden text-right">
                     <div class="absolute top-0 right-0 w-1.5 h-full bg-rose-500"></div>
                     <div class="flex items-center justify-between mb-3">
                         <span class="text-xs font-bold text-slate-500 tracking-wider">لم يتحقق المستهدف</span>
@@ -181,8 +192,7 @@
             <!-- 2. قسم الرسوم البيانية التفاعلية في المنتصف -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 
-                <!-- الرسم البياني الأول -->
-                <div class="pro-card p-6 rounded-2xl">
+                <div class="pro-card p-6 rounded-2xl text-right">
                     <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
                         <h3 class="text-sm font-extrabold text-slate-900 flex items-center gap-2">
                             <i class="fa-solid fa-chart-area text-sky-600"></i> اتجاه أداء تجربة المريض والزائر السري
@@ -194,8 +204,7 @@
                     </div>
                 </div>
 
-                <!-- الرسم البياني الثاني -->
-                <div class="pro-card p-6 rounded-2xl">
+                <div class="pro-card p-6 rounded-2xl text-right">
                     <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
                         <h3 class="text-sm font-extrabold text-slate-900 flex items-center gap-2">
                             <i class="fa-solid fa-chart-column text-sky-600"></i> مقارنة أداء أهم المؤشرات عبر الأرباع (Q1 - Q4)
@@ -213,7 +222,7 @@
             <div class="space-y-4 pt-2">
                 <div class="flex items-center justify-between">
                     <h3 class="text-base font-extrabold text-slate-900 border-r-4 border-sky-600 pr-3 flex items-center gap-2">
-                        المؤشرات الأربعة المعتمدة للمستشفى
+                        المؤشرات المعتمدة للمستشفى
                     </h3>
                     <span class="text-xs text-slate-600 bg-white px-3.5 py-1.5 rounded-xl border border-slate-200 font-semibold shadow-sm">
                         <i class="fa-solid fa-circle-dot text-emerald-500 ml-1"></i> محدثة فورياً
@@ -223,11 +232,11 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                     
                     <!-- مؤشر 1 -->
-                    <div class="pro-card p-5 rounded-2xl">
+                    <div class="pro-card p-5 rounded-2xl text-right">
                         <div class="flex items-center justify-between mb-3">
                             <span class="text-sm font-bold text-slate-900">مؤشر أداء 937</span>
                             <span class="text-xs font-bold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200 flex items-center gap-1.5">
-                                <i class="fa-solid fa-circle-check"></i> محقق
+                                <i class="fa-solid fa-circle-check"></i> معتمد ومحقق
                             </span>
                         </div>
                         <div class="flex items-baseline justify-between bg-slate-50/80 p-3.5 rounded-xl border border-slate-200/60 mb-3.5">
@@ -243,11 +252,11 @@
                     </div>
 
                     <!-- مؤشر 2 -->
-                    <div class="pro-card p-5 rounded-2xl">
+                    <div class="pro-card p-5 rounded-2xl text-right">
                         <div class="flex items-center justify-between mb-3">
                             <span class="text-sm font-bold text-slate-900">مؤشر أداء تجربة المريض</span>
                             <span class="text-xs font-bold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200 flex items-center gap-1.5">
-                                <i class="fa-solid fa-circle-check"></i> محقق
+                                <i class="fa-solid fa-circle-check"></i> معتمد ومحقق
                             </span>
                         </div>
                         <div class="flex items-baseline justify-between bg-slate-50/80 p-3.5 rounded-xl border border-slate-200/60 mb-3.5">
@@ -263,11 +272,11 @@
                     </div>
 
                     <!-- مؤشر 3 -->
-                    <div class="pro-card p-5 rounded-2xl">
+                    <div class="pro-card p-5 rounded-2xl text-right">
                         <div class="flex items-center justify-between mb-3">
                             <span class="text-sm font-bold text-slate-900">مؤشر أداء السلامة الدوائية</span>
                             <span class="text-xs font-bold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200 flex items-center gap-1.5">
-                                <i class="fa-solid fa-circle-check"></i> محقق
+                                <i class="fa-solid fa-circle-check"></i> معتمد ومحقق
                             </span>
                         </div>
                         <div class="flex items-baseline justify-between bg-slate-50/80 p-3.5 rounded-xl border border-slate-200/60 mb-3.5">
@@ -283,11 +292,11 @@
                     </div>
 
                     <!-- مؤشر 4 -->
-                    <div class="pro-card p-5 rounded-2xl">
+                    <div class="pro-card p-5 rounded-2xl text-right">
                         <div class="flex items-center justify-between mb-3">
                             <span class="text-sm font-bold text-slate-900">مؤشر أداء عينتي للمختبر</span>
                             <span class="text-xs font-bold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200 flex items-center gap-1.5">
-                                <i class="fa-solid fa-circle-check"></i> محقق
+                                <i class="fa-solid fa-circle-check"></i> معتمد ومحقق
                             </span>
                         </div>
                         <div class="flex items-baseline justify-between bg-slate-50/80 p-3.5 rounded-xl border border-slate-200/60 mb-3.5">
