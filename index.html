@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة مؤشرات الأداء التنفيذية - مستشفى إرادة والصحة النفسية بأبها</title>
+    <title>مستشفى إرادة والصحة النفسية بأبها - لوحة مؤشرات الأداء التنفيذية</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -14,819 +14,92 @@
                         medical: {
                             50: '#f0f4f8',
                             100: '#d9e2ec',
-                            650: '#0f3c5c',
-                            700: '#102a43',
-                            800: '#0b1f33',
-                            900: '#04101d',
+                            600: '#0284c7',
+                            800: '#0369a1',
+                            900: '#0f172a',
                         }
                     }
                 }
             }
         }
     </script>
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Font Awesome -->
+    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Janna LT / Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.cdnfonts.com/css/janna-lt');
-        body {
-            font-family: 'Janna LT', 'Tajawal', sans-serif;
-            background-color: #f1f5f9;
-        }
-        .executive-header {
-            background: linear-gradient(135deg, #0b1f33 0%, #102a43 100%);
-        }
+        body { font-family: system-ui, -apple-system, sans-serif; }
     </style>
 </head>
-<body class="bg-slate-100 text-slate-900 min-h-screen flex flex-col">
-
-    <!-- SECURE LOGIN SCREEN MODAL -->
-    <div id="login-screen" class="fixed inset-0 z-50 bg-[#0b1f33]/95 flex items-center justify-center p-4 backdrop-blur-md">
-        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8 border border-slate-200 text-center">
-            <div class="w-16 h-16 bg-sky-50 rounded-2xl mx-auto flex items-center justify-center text-[#0b1f33] text-2xl shadow-inner mb-4">
-                <i class="fa-solid fa-lock"></i>
-            </div>
-            <h2 class="text-lg font-bold text-slate-900">مستشفى إرادة والصحة النفسية بأبها</h2>
-            <p class="text-xs text-sky-700 font-medium mt-1 mb-6">تسجيل الدخول الآمن لفريق الأداء المعتمد</p>
-            
-            <form onsubmit="handleSecureLogin(event)" class="space-y-4 text-right">
-                <div>
-                    <label class="block text-xs font-semibold text-slate-700 mb-1">اختر المستخدم</label>
-                    <select id="login-user-select" class="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs bg-slate-50 focus:ring-2 focus:ring-[#0b1f33] outline-none font-semibold text-slate-800">
-                        <option value="admin">عبدالعزيز عبدالله ال زربه (Admin)</option>
-                        <option value="manager">لمى علي الحقباني (Performance Manager)</option>
-                        <option value="data">عمر هادي عسيري (Data Entry)</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-slate-700 mb-1">كلمة المرور الآمنة</label>
-                    <input type="password" id="login-password" required placeholder="أدخل كلمة المرور..." class="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs bg-slate-50 focus:ring-2 focus:ring-[#0b1f33] outline-none">
-                </div>
-                <div id="login-error" class="text-rose-600 text-xs font-bold hidden">كلمة المرور غير صحيحة، يرجى المحاولة مرة أخرى.</div>
-                <button type="submit" class="w-full bg-[#0b1f33] hover:bg-[#102a43] text-white text-xs font-bold py-3 rounded-xl shadow transition">
-                    تسجيل الدخول الآمن <i class="fa-solid fa-arrow-left mr-2"></i>
-                </button>
-            </form>
-            
-            <div class="mt-6 pt-4 border-t border-slate-100">
-                <button onclick="enterPresentationMode()" class="text-sky-700 hover:text-sky-900 text-xs font-bold flex items-center justify-center mx-auto transition">
-                    <i class="fa-solid fa-eye ml-1.5"></i> دخول وضع العرض السريع (للزوّار بدون تعديل)
-                </button>
-            </div>
-        </div>
-    </div>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
 
     <!-- MAIN APP WRAPPER -->
     <div id="main-app" class="flex flex-col min-h-screen">
+        
         <!-- HEADER - EXECUTIVE NAVY BLUE -->
-        <header class="executive-header text-white border-b border-sky-950 sticky top-0 z-40 shadow-lg">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-<div class="flex items-center space-x-3 space-x-reverse">
-    <div class="w-16 h-16 bg-white/10 backdrop-blur-sm rounded-xl p-2 flex items-center justify-center border border-white/20 shadow-inner">
-        <img src="logo.png" alt="شعار المستشفى" class="w-full h-full object-contain filter drop-shadow">
-    </div>
-    <div class="border-r border-sky-800/60 pr-4 mr-1">
-        <h2 class="text-base font-bold text-white tracking-wide leading-tight">مستشفى إرادة والصحة النفسية بأبها</h2>
-        <p class="text-xs text-sky-300 font-medium mt-0.5">تجمع عسير الصحي - لوحة مؤشرات الأداء التنفيذية</p>
-    </div>
-</div>
+        <header class="executive-header text-white border-b border-sky-950 sticky top-0 z-40 shadow-xl bg-gradient-to-r from-sky-950 via-sky-900 to-sky-950">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-24 flex items-center justify-between">
+                
+                <!-- شعار المستشفى والعنوان (محدث وبحجم احترافي وخلفية شفافة أنيقة) -->
+                <div class="flex items-center space-x-4 space-x-reverse">
+                    <div class="w-16 h-16 bg-white/10 backdrop-blur-md rounded-2xl p-2 flex items-center justify-center border border-white/20 shadow-inner transition-transform hover:scale-105 duration-300">
+                        <img src="logo.png" alt="شعار المستشفى" class="w-full h-full object-contain filter drop-shadow-md">
+                    </div>
+                    <div class="border-r-2 border-sky-600/60 pr-4 mr-1">
+                        <h2 class="text-base sm:text-lg font-bold text-white tracking-wide leading-tight">مستشفى إرادة والصحة النفسية بأبها</h2>
+                        <p class="text-xs text-sky-300 font-medium mt-1">تجمع عسير الصحي - لوحة مؤشرات الأداء التنفيذية</p>
+                    </div>
+                </div>
+
+                <!-- معلومات المستخدم وأزرار التنقل التفاعلية المُحسّنة -->
                 <div class="flex items-center space-x-3 space-x-reverse">
-                    <div id="user-badge" class="hidden sm:flex items-center bg-sky-900/80 px-3 py-1.5 rounded-full border border-sky-700 text-xs font-semibold text-sky-200">
-                        <i class="fa-solid fa-shield-halved ml-1.5 text-amber-400"></i>
-                        <span id="current-user-display">عبدالعزيز عبدالله ال زربه (Admin)</span>
+                    
+                    <!-- شريحة المستخدم -->
+                    <div id="user-badge" class="hidden sm:flex items-center bg-sky-900/80 px-3.5 py-1.5 rounded-full border border-sky-700/50 shadow-sm">
+                        <i class="fa-solid fa-shield-halved ml-2 text-amber-400"></i>
+                        <span id="current-user-display" class="text-xs font-semibold text-sky-100">عبد العزيز عبدالله آل زربه (Admin)</span>
                     </div>
 
-                    <button onclick="enterPresentationMode()" class="px-3.5 py-2 text-xs font-bold rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white shadow transition">
-                        <i class="fa-solid fa-desktop ml-1"></i> وضع العرض السريع
-                    </button>
+                    <!-- أزرار التنقل الرئيسية بتصميم فخم واحترافي -->
+                    <div class="flex items-center space-x-2 space-x-reverse bg-sky-950/60 p-1.5 rounded-2xl border border-sky-800/40 shadow-inner">
+                        <button onclick="enterPresentationMode()" class="px-3.5 py-2 text-xs font-bold rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white shadow-md transition-all duration-200 flex items-center gap-1.5 transform hover:-translate-y-0.5">
+                            <i class="fa-solid fa-desktop ml-1"></i>
+                            وضع العرض السريع
+                        </button>
 
-                    <button onclick="switchTab('dashboard')" id="nav-btn-dashboard" class="px-3.5 py-2 text-xs font-bold rounded-lg bg-sky-600 text-white shadow transition">
-                        <i class="fa-solid fa-chart-pie ml-1"></i> لوحة المؤشرات
-                    </button>
-                    <button onclick="switchTab('data-entry')" id="nav-btn-entry" class="px-3.5 py-2 text-xs font-semibold rounded-lg bg-sky-950/60 hover:bg-sky-900 text-sky-200 transition">
-                        <i class="fa-solid fa-pen-to-square ml-1"></i> إدخال وتعديل البيانات
-                    </button>
-                    <button onclick="switchTab('users')" id="nav-btn-users" class="px-3.5 py-2 text-xs font-semibold rounded-lg bg-sky-950/60 hover:bg-sky-900 text-sky-200 transition">
-                        <i class="fa-solid fa-users-gear ml-1"></i> المستخدمين وسجل التعديلات
-                    </button>
-                    <button onclick="logout()" class="px-3 py-2 text-xs font-semibold rounded-lg bg-rose-900/60 hover:bg-rose-900 text-rose-200 transition" title="قفل النظام وتسجيل الخروج">
-                        <i class="fa-solid fa-lock"></i>
-                    </button>
+                        <button onclick="switchTab('dashboard')" id="nav-btn-dashboard" class="px-3.5 py-2 text-xs font-bold rounded-xl bg-sky-800 text-white shadow transition-all duration-200 flex items-center gap-1.5">
+                            <i class="fa-solid fa-chart-pie ml-1"></i>
+                            لوحة المؤشرات
+                        </button>
+
+                        <button onclick="switchTab('data-entry')" id="nav-btn-entry" class="px-3.5 py-2 text-xs font-semibold rounded-xl text-sky-200 hover:bg-sky-800/50 hover:text-white transition-all duration-200 flex items-center gap-1.5">
+                            <i class="fa-solid fa-pen-to-square ml-1"></i>
+                            إدخال وتعديل البيانات
+                        </button>
+                    </div>
+
                 </div>
             </div>
         </header>
 
-        <!-- BODY CONTENT -->
-        <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
-
-            <!-- TAB 1: DASHBOARD -->
-            <div id="tab-dashboard" class="space-y-6">
-                <!-- FILTERS BAR -->
-                <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex flex-wrap items-center justify-between gap-4">
-                    <div class="flex flex-wrap items-center gap-3 w-full lg:w-auto">
-                        <div class="flex items-center space-x-2 space-x-reverse">
-                            <label class="text-xs font-bold text-slate-700"><i class="fa-solid fa-calendar ml-1 text-[#0b1f33]"></i> السنة:</label>
-                            <select id="filter-year" onchange="renderDashboard()" class="border border-slate-300 rounded-lg px-3 py-1.5 text-xs bg-slate-50 font-semibold text-slate-800 focus:ring-2 focus:ring-[#0b1f33] outline-none">
-                                <option value="2026">2026</option>
-                                <option value="2025">2025</option>
-                            </select>
-                        </div>
-                        <div class="flex items-center space-x-2 space-x-reverse">
-                            <label class="text-xs font-bold text-slate-700"><i class="fa-solid fa-filter ml-1 text-[#0b1f33]"></i> الربع:</label>
-                            <select id="filter-quarter" onchange="renderDashboard()" class="border border-slate-300 rounded-lg px-3 py-1.5 text-xs bg-slate-50 font-semibold text-slate-800 focus:ring-2 focus:ring-[#0b1f33] outline-none">
-                                <option value="ALL">جميع الأرباع (مقارنة ربع سنوية)</option>
-                                <option value="Q1">الربع الأول (Q1)</option>
-                                <option value="Q2">الربع الثاني (Q2)</option>
-                                <option value="Q3">الربع الثالث (Q3)</option>
-                                <option value="Q4">الربع الرابع (Q4)</option>
-                            </select>
-                        </div>
-                        <div class="flex items-center space-x-2 space-x-reverse">
-                            <label class="text-xs font-bold text-slate-700"><i class="fa-solid fa-stethoscope ml-1 text-[#0b1f33]"></i> المؤشر:</label>
-                            <select id="filter-indicator" onchange="renderDashboard()" class="border border-slate-300 rounded-lg px-3 py-1.5 text-xs bg-slate-50 font-semibold text-slate-800 focus:ring-2 focus:ring-[#0b1f33] outline-none max-w-[200px]">
-                                <option value="ALL">جميع المؤشرات (14 مؤشر)</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="flex items-center space-x-2 space-x-reverse w-full lg:w-auto justify-end">
-                        <span class="text-xs text-slate-500">آخر تحديث: <b class="text-slate-800">أكتوبر 2026</b></span>
-                        <button onclick="exportReport()" class="bg-[#0b1f33] hover:bg-[#102a43] text-white text-xs px-3.5 py-1.5 rounded-lg font-semibold shadow-sm transition">
-                            <i class="fa-solid fa-file-excel ml-1 text-emerald-400"></i> تصدير البيانات
-                        </button>
-                    </div>
-                </div>
-
-                <!-- SUMMARY KPI CARDS -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 border-r-4 border-r-[#0b1f33] flex items-center justify-between">
-                        <div>
-                            <p class="text-xs font-bold text-slate-500">إجمالي المؤشرات الفعالة</p>
-                            <h3 id="kpi-total" class="text-2xl font-black text-slate-900 mt-1">14</h3>
-                            <p class="text-[11px] text-slate-400 mt-1">تغطي العمليات الإكلينيكية والتشغيلية</p>
-                        </div>
-                        <div class="w-12 h-12 rounded-xl bg-sky-50 flex items-center justify-center text-[#0b1f33] text-xl shadow-inner">
+        <!-- محتوى لوحة المؤشرات الرئيسي -->
+        <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <!-- بطاقة إحصائية تجريبية كمثال -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">إجمالي المؤشرات النشطة</span>
+                        <div class="w-10 h-10 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center font-bold">
                             <i class="fa-solid fa-chart-line"></i>
                         </div>
                     </div>
-                    <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 border-r-4 border-r-emerald-600 flex items-center justify-between">
-                        <div>
-                            <p class="text-xs font-bold text-slate-500">حقق المستهدف (Target)</p>
-                            <h3 id="kpi-achieved" class="text-2xl font-black text-emerald-600 mt-1">11</h3>
-                            <p class="text-[11px] text-emerald-600/80 mt-1">أداء ضمن المستوى المطلوب</p>
-                        </div>
-                        <div class="w-12 h-12 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 text-xl shadow-inner">
-                            <i class="fa-solid fa-circle-check"></i>
-                        </div>
-                    </div>
-                    <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 border-r-4 border-r-amber-500 flex items-center justify-between">
-                        <div>
-                            <p class="text-xs font-bold text-slate-500">يحتاج متابعة وتدخل</p>
-                            <h3 id="kpi-warning" class="text-2xl font-black text-amber-600 mt-1">2</h3>
-                            <p class="text-[11px] text-amber-600/80 mt-1">قريب من الحد المستهدف</p>
-                        </div>
-                        <div class="w-12 h-12 rounded-xl bg-amber-50 flex items-center justify-center text-amber-600 text-xl shadow-inner">
-                            <i class="fa-solid fa-triangle-exclamation"></i>
-                        </div>
-                    </div>
-                    <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 border-r-4 border-r-rose-600 flex items-center justify-between">
-                        <div>
-                            <p class="text-xs font-bold text-slate-500">لم يتحقق المستهدف</p>
-                            <h3 id="kpi-failed" class="text-2xl font-black text-rose-600 mt-1">1</h3>
-                            <p class="text-[11px] text-rose-600/80 mt-1">يتطلب خطة تصحيحية عاجلة</p>
-                        </div>
-                        <div class="w-12 h-12 rounded-xl bg-rose-50 flex items-center justify-center text-rose-600 text-xl shadow-inner">
-                            <i class="fa-solid fa-circle-xmark"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- CHARTS SECTION -->
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200">
-                        <div class="flex items-center justify-between mb-4">
-                            <h4 class="text-sm font-bold text-slate-800"><i class="fa-solid fa-chart-column text-[#0b1f33] ml-1.5"></i> مقارنة أداء أهم المؤشرات عبر الأرباع (Q1 - Q4)</h4>
-                            <span class="text-[11px] bg-sky-50 text-sky-800 px-2.5 py-0.5 rounded font-bold">تفاعلي</span>
-                        </div>
-                        <div class="h-72 relative">
-                            <canvas id="quarterlyBarChart"></canvas>
-                        </div>
-                    </div>
-                    <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200">
-                        <div class="flex items-center justify-between mb-4">
-                            <h4 class="text-sm font-bold text-slate-800"><i class="fa-solid fa-chart-line text-[#0b1f33] ml-1.5"></i> اتجاه أداء تجربة المريض والزائر السري</h4>
-                            <span class="text-[11px] bg-slate-100 text-slate-700 px-2.5 py-0.5 rounded font-bold">اتجاه عام</span>
-                        </div>
-                        <div class="h-72 relative">
-                            <canvas id="trendLineChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 14 INDICATORS CARDS GRID -->
-                <div class="space-y-4">
-                    <div class="flex items-center justify-between">
-                        <h3 class="text-base font-bold text-slate-900 border-r-4 border-[#0b1f33] pr-3">المؤشرات الأربعة عشر المعتمدة للمستشفى</h3>
-                        <span class="text-xs text-slate-500">تم التحديث الفوري بناءً على البيانات المدخلة</span>
-                    </div>
-                    <div id="indicators-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
-                        <!-- Dynamic Cards injected via JS -->
-                    </div>
-                </div>
-
-                <!-- DETAILED DATA TABLE -->
-                <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-                    <div class="p-4 bg-slate-50 border-b border-slate-200 flex flex-wrap items-center justify-between gap-4">
-                        <h4 class="text-sm font-bold text-slate-800"><i class="fa-solid fa-table text-[#0b1f33] ml-1.5"></i> جدول البيانات التفصيلي للمؤشرات والملخص ربع السنوي</h4>
-                        <div class="flex items-center space-x-2 space-x-reverse">
-                            <input type="text" id="table-search" oninput="filterTable()" placeholder="بحث في المؤشرات..." class="px-3 py-1.5 text-xs border border-slate-300 rounded-lg outline-none focus:ring-2 focus:ring-[#0b1f33] bg-white">
-                        </div>
-                    </div>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-right text-xs">
-                            <thead class="bg-[#0b1f33] text-white font-bold border-b border-slate-200">
-                                <tr>
-                                    <th class="py-3 px-4">المؤشر</th>
-                                    <th class="py-3 px-3 text-center">السنة</th>
-                                    <th class="py-3 px-3 text-center">الربع (Q)</th>
-                                    <th class="py-3 px-3 text-center">القيمة الفعلية</th>
-                                    <th class="py-3 px-3 text-center">المستهدف (Target)</th>
-                                    <th class="py-3 px-3 text-center">اتجاه الأداء</th>
-                                    <th class="py-3 px-3 text-center">الحالة</th>
-                                    <th class="py-3 px-4">ملاحظات</th>
-                                </tr>
-                            </thead>
-                            <tbody id="detailed-table-body" class="divide-y divide-slate-100 text-slate-700">
-                                <!-- Dynamic rows -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-
-            <!-- TAB 2: DATA ENTRY & EDIT -->
-            <div id="tab-data-entry" class="hidden space-y-6">
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-                    <div class="flex items-center justify-between mb-6 pb-4 border-b border-slate-100">
-                        <div>
-                            <h3 class="text-base font-bold text-slate-900"><i class="fa-solid fa-pen-to-square text-[#0b1f33] ml-2"></i> لوحة إدخال وتعديل بيانات المؤشرات</h3>
-                            <p class="text-xs text-slate-500 mt-0.5">قم بإدخال القيمة أو تعديلها وسيتحدث النظام والرسوم البيانية فوراً.</p>
-                        </div>
-                        <span id="entry-user-badge" class="bg-sky-50 text-sky-800 text-xs px-3 py-1 rounded-full font-bold">بواسطة الفريق المعتمد</span>
-                    </div>
-
-                    <form id="indicator-form" onsubmit="saveIndicatorData(event)" class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-700 mb-1">اختر المؤشر</label>
-                            <select id="form-indicator-name" required class="w-full border border-slate-300 rounded-lg px-3 py-2 text-xs bg-slate-50 focus:ring-2 focus:ring-[#0b1f33] outline-none">
-                                <!-- Populated via JS -->
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-700 mb-1">السنة</label>
-                            <select id="form-year" required class="w-full border border-slate-300 rounded-lg px-3 py-2 text-xs bg-slate-50 focus:ring-2 focus:ring-[#0b1f33] outline-none">
-                                <option value="2026">2026</option>
-                                <option value="2025">2025</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-700 mb-1">الربع (Quarter)</label>
-                            <select id="form-quarter" required class="w-full border border-slate-300 rounded-lg px-3 py-2 text-xs bg-slate-50 focus:ring-2 focus:ring-[#0b1f33] outline-none">
-                                <option value="Q1">الربع الأول (Q1)</option>
-                                <option value="Q2">الربع الثاني (Q2)</option>
-                                <option value="Q3">الربع الثالث (Q3)</option>
-                                <option value="Q4">الربع الرابع (Q4)</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-700 mb-1">القيمة الفعلية (Actual)</label>
-                            <input type="number" step="0.01" id="form-value" required class="w-full border border-slate-300 rounded-lg px-3 py-2 text-xs bg-slate-50 focus:ring-2 focus:ring-[#0b1f33] outline-none" placeholder="مثال: 93.5">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-700 mb-1">القيمة المستهدفة (Target)</label>
-                            <input type="number" step="0.01" id="form-target" required class="w-full border border-slate-300 rounded-lg px-3 py-2 text-xs bg-slate-50 focus:ring-2 focus:ring-[#0b1f33] outline-none" placeholder="مثال: 90.0">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-700 mb-1">اتجاه الأداء (Performance Direction)</label>
-                            <select id="form-direction" required class="w-full border border-slate-300 rounded-lg px-3 py-2 text-xs bg-slate-50 focus:ring-2 focus:ring-[#0b1f33] outline-none">
-                                <option value="higher">الأعلى أفضل (Higher is Better)</option>
-                                <option value="lower">الأقل أفضل (Lower is Better)</option>
-                                <option value="target">مرتبط بقيمة مستهدفة دقيقة (Target Based)</option>
-                            </select>
-                        </div>
-                        <div class="md:col-span-3">
-                            <label class="block text-xs font-semibold text-slate-700 mb-1">ملاحظات إضافية / خطة تصحيحية (اختياري)</label>
-                            <input type="text" id="form-notes" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-xs bg-slate-50 focus:ring-2 focus:ring-[#0b1f33] outline-none" placeholder="اكتب ملاحظات أو توصيات إدارية...">
-                        </div>
-                        <div class="md:col-span-3 flex items-center justify-end space-x-3 space-x-reverse pt-3">
-                            <button type="button" onclick="resetEntryForm()" class="px-4 py-2 text-xs font-semibold rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition">إلغاء / إعادة ضبط</button>
-                            <button type="submit" class="px-5 py-2 text-xs font-semibold rounded-lg bg-[#0b1f33] hover:bg-[#102a43] text-white shadow-sm transition">حفظ وتحديث اللوحة تلقائياً</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-            <!-- TAB 3: USERS & AUDIT LOG -->
-            <div id="tab-users" class="hidden space-y-6">
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <!-- USERS MANAGEMENT -->
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-                        <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
-                            <h3 class="text-sm font-bold text-slate-900"><i class="fa-solid fa-users text-[#0b1f33] ml-2"></i> إدارة المستخدمين والصلاحيات</h3>
-                            <button onclick="openNewUserModal()" class="bg-[#0b1f33] hover:bg-[#102a43] text-white text-xs px-3 py-1.5 rounded-lg font-semibold transition">
-                                <i class="fa-solid fa-user-plus ml-1"></i> إضافة مستخدم
-                            </button>
-                        </div>
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-right text-xs">
-                                <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
-                                    <tr>
-                                        <th class="py-2.5 px-3">المستخدم</th>
-                                        <th class="py-2.5 px-3">الدور</th>
-                                        <th class="py-2.5 px-3 text-center">الحالة</th>
-                                        <th class="py-2.5 px-3 text-center">إجراء</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="users-table-body" class="divide-y divide-slate-100 text-slate-700">
-                                    <!-- Injected via JS -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <!-- AUDIT LOG -->
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-                        <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
-                            <h3 class="text-sm font-bold text-slate-900"><i class="fa-solid fa-clock-rotate-left text-[#0b1f33] ml-2"></i> سجل التعديلات التلقائي (Audit Log)</h3>
-                            <span class="text-[11px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded font-semibold">مراقبة العمليات</span>
-                        </div>
-                        <div class="overflow-x-auto max-h-80 overflow-y-auto">
-                            <table class="w-full text-right text-xs">
-                                <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200 sticky top-0">
-                                    <tr>
-                                        <th class="py-2 px-3">المستخدم</th>
-                                        <th class="py-2 px-3">العملية</th>
-                                        <th class="py-2 px-3">التفاصيل</th>
-                                        <th class="py-2 px-3">التوقيت</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="audit-table-body" class="divide-y divide-slate-100 text-slate-700">
-                                    <!-- Injected via JS -->
-                                </tbody>
-                            </table>
-                        </div>
+                    <div class="text-2xl font-black text-slate-900">24 مؤشراً</div>
+                    <div class="text-xs text-emerald-600 font-medium mt-1 flex items-center gap-1">
+                        <i class="fa-solid fa-arrow-up"></i> تحديث مستمر للأداء
                     </div>
                 </div>
             </div>
         </main>
-
-        <!-- FOOTER -->
-        <footer class="bg-white border-t border-slate-200 py-4 mt-auto">
-            <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500">
-                جميع الحقوق محفوظة © 2026 مستشفى إرادة والصحة النفسية بأبها (تجمع عسير الصحي) - لوحة مؤشرات الأداء التنفيذية
-            </div>
-        </footer>
+        
     </div>
 
-    <!-- JAVASCRIPT LOGIC -->
-    <script>
-        const securePasswords = {
-            "admin": "admin123",
-            "manager": "manager123",
-            "data": "data123"
-        };
-
-        const initialIndicators = [
-            { id: 1, name: "مؤشر أداء 937", unit: "%", direction: "higher", target: 90.0, q1: 92.5, q2: 94.0, q3: 93.2, q4: 95.1, notes: "أداء ممتاز وتجاوز المستهدف" },
-            { id: 2, name: "مؤشر أداء تجربة المريض", unit: "%", direction: "higher", target: 88.0, q1: 85.0, q2: 89.2, q3: 90.5, q4: 91.0, notes: "تحسن مستمر بفضل المبادرات التحسينية" },
-            { id: 3, name: "مؤشر أداء الزائر السري", unit: "%", direction: "higher", target: 85.0, q1: 82.0, q2: 84.5, q3: 86.0, q4: 88.2, notes: "ضمن المستوى المستهدف" },
-            { id: 4, name: "مؤشر أداء عينتي للمختبر", unit: "%", direction: "higher", target: 95.0, q1: 94.2, q2: 95.5, q3: 96.1, q4: 95.8, notes: "استقرار في كفاءة المخبر" },
-            { id: 5, name: "مؤشر أداء السلامة الدوائية", unit: "%", direction: "higher", target: 98.0, q1: 97.5, q2: 98.2, q3: 98.6, q4: 99.0, notes: "التزام كامل بمعايير السلامة" },
-            { id: 6, name: "مؤشر أداء البريد الدوائي", unit: "%", direction: "higher", target: 90.0, q1: 88.0, q2: 91.5, q3: 92.0, q4: 93.4, notes: "توصيل الأدوية للمنازل بفاعلية" },
-            { id: 7, name: "مؤشر أداء الطب الاتصالي", unit: "حالة", direction: "higher", target: 500, q1: 420, q2: 510, q3: 550, q4: 590, notes: "زيادة في الاستشارات عن بعد" },
-            { id: 8, name: "عدد مراجعي العيادات الخارجية", unit: "مراجع", direction: "higher", target: 12000, q1: 11500, q2: 12400, q3: 12800, q4: 13100, notes: "إقبال عالٍ على العيادات التخصصية" },
-            { id: 9, name: "نسبة عدم الحضور للموعد (No Show)", unit: "%", direction: "lower", target: 15.0, q1: 18.2, q2: 16.5, q3: 14.2, q4: 13.8, notes: "تحسن بعد تفعيل الرسائل التذكيرية" },
-            { id: 10, name: "عدد مراجعي الطوارئ", unit: "مراجع", direction: "target", target: 8000, q1: 7800, q2: 8200, q3: 7900, q4: 8100, notes: "أداء مستقر في الطوارئ" },
-            { id: 11, name: "نسبة إعادة زيارة الطوارئ خلال 72 ساعة", unit: "%", direction: "lower", target: 5.0, q1: 6.2, q2: 5.8, q3: 4.9, q4: 4.6, notes: "انخفاض ملحوظ ومستهدف متحقق" },
-            { id: 12, name: "نسبة إشغال الأسرة", unit: "%", direction: "target", target: 85.0, q1: 80.0, q2: 86.5, q3: 84.2, q4: 85.5, notes: "معدل إشغال مثالي" },
-            { id: 13, name: "نسبة إعادة التنويم خلال 30 يومًا", unit: "%", direction: "lower", target: 8.0, q1: 9.1, q2: 8.5, q3: 7.9, q4: 7.4, notes: "انخفاض تدريجي ناجح" },
-            { id: 14, name: "الموارد الذاتية", unit: "ألف ر.س", direction: "higher", target: 1500, q1: 1300, q2: 1450, q3: 1600, q4: 1750, notes: "تجاوز المستهدف المالي للربع" }
-        ];
-
-        const exactUsersList = [
-            { username: "admin", name: "عبدالعزيز عبدالله ال زربه", role: "Admin", active: true },
-            { username: "manager", name: "لمى علي الحقباني", role: "Performance Manager", active: true },
-            { username: "data", name: "عمر هادي عسيري", role: "Data Entry", active: true }
-        ];
-
-        let state = {
-            currentUser: null,
-            indicators: JSON.parse(localStorage.getItem('hospital_indicators')) || initialIndicators,
-            auditLogs: JSON.parse(localStorage.getItem('hospital_audit')) || [
-                { user: "النظام", action: "بدء تشغيل النظام", details: "تم إطلاق لوحة المؤشرات التنفيذية الآمنة", time: "2026-10-01 09:30" }
-            ],
-            usersList: exactUsersList
-        };
-
-        localStorage.setItem('hospital_users', JSON.stringify(exactUsersList));
-
-        function handleSecureLogin(e) {
-            e.preventDefault();
-            const userKey = document.getElementById('login-user-select').value;
-            const passInput = document.getElementById('login-password').value;
-            const errorDiv = document.getElementById('login-error');
-
-            if (securePasswords[userKey] === passInput) {
-                errorDiv.classList.add('hidden');
-                if (userKey === 'admin') {
-                    state.currentUser = { username: "admin", name: "عبدالعزيز عبدالله ال زربه", role: "Admin" };
-                } else if (userKey === 'manager') {
-                    state.currentUser = { username: "manager", name: "لمى علي الحقباني", role: "Performance Manager" };
-                } else {
-                    state.currentUser = { username: "data", name: "عمر هادي عسيري", role: "Data Entry" };
-                }
-
-                document.getElementById('current-user-display').innerText = `${state.currentUser.name} (${state.currentUser.role})`;
-                document.getElementById('entry-user-badge').innerText = `بواسطة: ${state.currentUser.name} (${state.currentUser.role})`;
-                document.getElementById('login-screen').classList.add('hidden');
-                document.getElementById('login-password').value = '';
-                
-                logAudit(state.currentUser.name, "تسجيل دخول آمن", `دخول ناجح لصلاحية ${state.currentUser.role}`);
-                initApp();
-            } else {
-                errorDiv.classList.remove('hidden');
-            }
-        }
-
-        function enterPresentationMode() {
-            state.currentUser = { username: "viewer", name: "زائر / عارض خارجي", role: "Viewer (عرض فقط)" };
-            document.getElementById('current-user-display').innerText = "وضع العرض السريع (للزوار)";
-            document.getElementById('login-screen').classList.add('hidden');
-            
-            if(document.getElementById('nav-btn-entry')) document.getElementById('nav-btn-entry').style.display = 'none';
-            if(document.getElementById('nav-btn-users')) document.getElementById('nav-btn-users').style.display = 'none';
-            
-            initApp();
-        }
-
-        function logout() {
-            document.getElementById('login-screen').classList.remove('hidden');
-            if(document.getElementById('nav-btn-entry')) document.getElementById('nav-btn-entry').style.display = 'inline-block';
-            if(document.getElementById('nav-btn-users')) document.getElementById('nav-btn-users').style.display = 'inline-block';
-        }
-
-        function initApp() {
-            populateIndicatorDropdowns();
-            renderDashboard();
-            renderUsersTable();
-            renderAuditLog();
-        }
-
-        function switchTab(tabName) {
-            document.getElementById('tab-dashboard').classList.add('hidden');
-            document.getElementById('tab-data-entry').classList.add('hidden');
-            document.getElementById('tab-users').classList.add('hidden');
-
-            document.getElementById('nav-btn-dashboard').className = "px-3.5 py-2 text-xs font-semibold rounded-lg bg-sky-950/60 text-sky-200 hover:bg-sky-900 transition";
-            if(document.getElementById('nav-btn-entry')) document.getElementById('nav-btn-entry').className = "px-3.5 py-2 text-xs font-semibold rounded-lg bg-sky-950/60 text-sky-200 hover:bg-sky-900 transition";
-            if(document.getElementById('nav-btn-users')) document.getElementById('nav-btn-users').className = "px-3.5 py-2 text-xs font-semibold rounded-lg bg-sky-950/60 text-sky-200 hover:bg-sky-900 transition";
-
-            if (tabName === 'dashboard') {
-                document.getElementById('tab-dashboard').classList.remove('hidden');
-                document.getElementById('nav-btn-dashboard').className = "px-3.5 py-2 text-xs font-bold rounded-lg bg-sky-600 text-white shadow transition";
-                renderDashboard();
-            } else if (tabName === 'data-entry') {
-                document.getElementById('tab-data-entry').classList.remove('hidden');
-                document.getElementById('nav-btn-entry').className = "px-3.5 py-2 text-xs font-bold rounded-lg bg-sky-600 text-white shadow transition";
-            } else if (tabName === 'users') {
-                document.getElementById('tab-users').classList.remove('hidden');
-                document.getElementById('nav-btn-users').className = "px-3.5 py-2 text-xs font-bold rounded-lg bg-sky-600 text-white shadow transition";
-                renderUsersTable();
-                renderAuditLog();
-            }
-        }
-
-        function populateIndicatorDropdowns() {
-            const selectFilter = document.getElementById('filter-indicator');
-            const selectForm = document.getElementById('form-indicator-name');
-            
-            let filterHtml = '<option value="ALL">جميع المؤشرات (14 مؤشر)</option>';
-            let formHtml = '';
-
-            state.indicators.forEach(ind => {
-                filterHtml += `<option value="${ind.name}">${ind.name}</option>`;
-                formHtml += `<option value="${ind.name}">${ind.name} (${ind.unit})</option>`;
-            });
-
-            selectFilter.innerHTML = filterHtml;
-            selectForm.innerHTML = formHtml;
-        }
-
-        let barChartInstance = null;
-        let trendChartInstance = null;
-
-        function renderDashboard() {
-            const quarter = document.getElementById('filter-quarter').value;
-            const selectedInd = document.getElementById('filter-indicator').value;
-
-            let filteredIndicators = state.indicators;
-            if (selectedInd !== 'ALL') {
-                filteredIndicators = state.indicators.filter(i => i.name === selectedInd);
-            }
-
-            let achievedCount = 0;
-            let warningCount = 0;
-            let failedCount = 0;
-
-            filteredIndicators.forEach(ind => {
-                let val = quarter === 'Q1' ? ind.q1 : quarter === 'Q2' ? ind.q2 : quarter === 'Q3' ? ind.q3 : ind.q4;
-                let status = getIndicatorStatus(val, ind.target, ind.direction);
-                if (status === 'achieved') achievedCount++;
-                else if (status === 'warning') warningCount++;
-                else failedCount++;
-            });
-
-            document.getElementById('kpi-total').innerText = filteredIndicators.length;
-            document.getElementById('kpi-achieved').innerText = achievedCount;
-            document.getElementById('kpi-warning').innerText = warningCount;
-            document.getElementById('kpi-failed').innerText = failedCount;
-
-            let gridHtml = '';
-            filteredIndicators.forEach(ind => {
-                let currentVal = quarter === 'Q1' ? ind.q1 : quarter === 'Q2' ? ind.q2 : quarter === 'Q3' ? ind.q3 : ind.q4;
-                let prevVal = quarter === 'Q2' ? ind.q1 : quarter === 'Q3' ? ind.q2 : quarter === 'Q4' ? ind.q3 : ind.q4;
-                let diff = Number((currentVal - prevVal).toFixed(1));
-                let status = getIndicatorStatus(currentVal, ind.target, ind.direction);
-                
-                let statusBadge = '';
-                if (status === 'achieved') statusBadge = '<span class="bg-emerald-50 text-emerald-700 px-2.5 py-0.5 rounded-full text-[11px] font-bold"><i class="fa-solid fa-circle-check ml-1"></i> محقق</span>';
-                else if (status === 'warning') statusBadge = '<span class="bg-amber-50 text-amber-700 px-2.5 py-0.5 rounded-full text-[11px] font-bold"><i class="fa-solid fa-triangle-exclamation ml-1"></i> يحتاج متابعة</span>';
-                else statusBadge = '<span class="bg-rose-50 text-rose-700 px-2.5 py-0.5 rounded-full text-[11px] font-bold"><i class="fa-solid fa-circle-xmark ml-1"></i> لم يتحقق</span>';
-
-                let diffColor = diff > 0 ? (ind.direction === 'lower' ? 'text-rose-600' : 'text-emerald-600') : (diff < 0 ? (ind.direction === 'lower' ? 'text-emerald-600' : 'text-rose-600') : 'text-slate-500');
-                let diffIcon = diff > 0 ? 'fa-arrow-trend-up' : (diff < 0 ? 'fa-arrow-trend-down' : 'fa-minus');
-
-                let editBtn = state.currentUser.username !== 'viewer' ? `<button onclick="editIndicatorPrompt('${ind.name}')" class="text-sky-700 hover:text-sky-900 font-semibold"><i class="fa-solid fa-pen ml-1"></i> تعديل</button>` : '';
-
-                gridHtml += `
-                    <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200 flex flex-col justify-between hover:shadow-md transition">
-                        <div>
-                            <div class="flex items-start justify-between mb-2">
-                                <h4 class="text-xs font-bold text-slate-800 leading-snug">${ind.name}</h4>
-                                ${statusBadge}
-                            </div>
-                            <div class="flex items-baseline space-x-2 space-x-reverse my-3">
-                                <span class="text-2xl font-black text-slate-900">${currentVal}</span>
-                                <span class="text-xs font-semibold text-slate-500">${ind.unit}</span>
-                                <span class="text-[11px] mr-auto bg-slate-100 text-slate-700 px-2 py-0.5 rounded font-semibold">المستهدف: ${ind.target} ${ind.unit}</span>
-                            </div>
-                            <div class="grid grid-cols-4 gap-1 text-center bg-slate-50 p-2 rounded-lg text-[11px] mb-3 border border-slate-100">
-                                <div><span class="text-slate-400 block">Q1</span><b>${ind.q1}</b></div>
-                                <div><span class="text-slate-400 block">Q2</span><b>${ind.q2}</b></div>
-                                <div><span class="text-slate-400 block">Q3</span><b>${ind.q3}</b></div>
-                                <div><span class="text-slate-400 block">Q4</span><b>${ind.q4}</b></div>
-                            </div>
-                        </div>
-                        <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-                            <span class="text-slate-500 flex items-center">
-                                التغير: <b class="${diffColor} mr-1 flex items-center"><i class="fa-solid ${diffIcon} ml-0.5"></i> ${Math.abs(diff)}</b>
-                            </span>
-                            ${editBtn}
-                        </div>
-                    </div>
-                `;
-            });
-            document.getElementById('indicators-grid').innerHTML = gridHtml;
-
-            renderDetailedTable(filteredIndicators);
-            renderCharts(filteredIndicators);
-        }
-
-        function getIndicatorStatus(val, target, direction) {
-            if (direction === 'higher') {
-                if (val >= target) return 'achieved';
-                if (val >= target * 0.93) return 'warning';
-                return 'failed';
-            } else if (direction === 'lower') {
-                if (val <= target) return 'achieved';
-                if (val <= target * 1.08) return 'warning';
-                return 'failed';
-            } else {
-                let diff = Math.abs(val - target) / target;
-                if (diff <= 0.05) return 'achieved';
-                if (diff <= 0.12) return 'warning';
-                return 'failed';
-            }
-        }
-
-        function renderDetailedTable(indicatorsList) {
-            let tbodyHtml = '';
-            indicatorsList.forEach(ind => {
-                ['Q1', 'Q2', 'Q3', 'Q4'].forEach(q => {
-                    let val = q === 'Q1' ? ind.q1 : q === 'Q2' ? ind.q2 : q === 'Q3' ? ind.q3 : ind.q4;
-                    let status = getIndicatorStatus(val, ind.target, ind.direction);
-                    let statusBadge = status === 'achieved' ? '<span class="text-emerald-700 font-bold"><i class="fa-solid fa-circle-check ml-1"></i> محقق</span>' :
-                                      status === 'warning' ? '<span class="text-amber-600 font-bold"><i class="fa-solid fa-triangle-exclamation ml-1"></i> متابعة</span>' :
-                                      '<span class="text-rose-600 font-bold"><i class="fa-solid fa-circle-xmark ml-1"></i> غير محقق</span>';
-
-                    tbodyHtml += `
-                        <tr class="hover:bg-slate-50 transition">
-                            <td class="py-2.5 px-4 font-bold text-slate-800">${ind.name}</td>
-                            <td class="py-2.5 px-3 text-center text-slate-600">2026</td>
-                            <td class="py-2.5 px-3 text-center font-semibold text-[#0b1f33]">${q}</td>
-                            <td class="py-2.5 px-3 text-center font-bold text-slate-900">${val} ${ind.unit}</td>
-                            <td class="py-2.5 px-3 text-center text-slate-600">${ind.target} ${ind.unit}</td>
-                            <td class="py-2.5 px-3 text-center text-slate-500">${ind.direction === 'higher' ? 'الأعلى أفضل' : (ind.direction === 'lower' ? 'الأقل أفضل' : 'مستهدف دقيق')}</td>
-                            <td class="py-2.5 px-3 text-center">${statusBadge}</td>
-                            <td class="py-2.5 px-4 text-slate-500">${ind.notes || '-'}</td>
-                        </tr>
-                    `;
-                });
-            });
-            document.getElementById('detailed-table-body').innerHTML = tbodyHtml;
-        }
-
-        function filterTable() {
-            const query = document.getElementById('table-search').value.toLowerCase();
-            const rows = document.querySelectorAll('#detailed-table-body tr');
-            rows.forEach(row => {
-                const text = row.innerText.toLowerCase();
-                row.style.display = text.includes(query) ? '' : 'none';
-            });
-        }
-
-        function renderCharts(indicatorsList) {
-            const sampleInds = indicatorsList.slice(0, 5);
-            const labels = sampleInds.map(i => i.name);
-            
-            const q1Data = sampleInds.map(i => i.q1);
-            const q2Data = sampleInds.map(i => i.q2);
-            const q3Data = sampleInds.map(i => i.q3);
-            const q4Data = sampleInds.map(i => i.q4);
-
-            const ctxBar = document.getElementById('quarterlyBarChart').getContext('2d');
-            if (barChartInstance) barChartInstance.destroy();
-            
-            barChartInstance = new Chart(ctxBar, {
-                type: 'bar',
-                data: {
-                    labels: labels,
-                    datasets: [
-                        { label: 'Q1', data: q1Data, backgroundColor: '#38bdf8', borderRadius: 4 },
-                        { label: 'Q2', data: q2Data, backgroundColor: '#0284c7', borderRadius: 4 },
-                        { label: 'Q3', data: q3Data, backgroundColor: '#0369a1', borderRadius: 4 },
-                        { label: 'Q4', data: q4Data, backgroundColor: '#0b1f33', borderRadius: 4 }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { position: 'bottom', labels: { font: { family: 'Janna LT, sans-serif', size: 11 } } } },
-                    scales: { x: { ticks: { font: { family: 'Janna LT, sans-serif', size: 10 } } }, y: { ticks: { font: { family: 'Janna LT, sans-serif', size: 10 } } } }
-                }
-            });
-
-            const trendInd1 = indicatorsList.find(i => i.id === 2) || indicatorsList[0];
-            const trendInd2 = indicatorsList.find(i => i.id === 1) || indicatorsList[1];
-
-            const ctxTrend = document.getElementById('trendLineChart').getContext('2d');
-            if (trendChartInstance) trendChartInstance.destroy();
-
-            trendChartInstance = new Chart(ctxTrend, {
-                type: 'line',
-                data: {
-                    labels: ['Q1', 'Q2', 'Q3', 'Q4'],
-                    datasets: [
-                        { label: trendInd1.name, data: [trendInd1.q1, trendInd1.q2, trendInd1.q3, trendInd1.q4], borderColor: '#0b1f33', backgroundColor: 'rgba(11, 31, 51, 0.1)', fill: true, tension: 0.3, borderWidth: 3 },
-                        { label: trendInd2.name, data: [trendInd2.q1, trendInd2.q2, trendInd2.q3, trendInd2.q4], borderColor: '#0284c7', backgroundColor: 'rgba(2, 132, 199, 0.1)', fill: true, tension: 0.3, borderWidth: 3 }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { position: 'bottom', labels: { font: { family: 'Janna LT, sans-serif', size: 11 } } } },
-                    scales: { x: { ticks: { font: { family: 'Janna LT, sans-serif', size: 10 } } }, y: { ticks: { font: { family: 'Janna LT, sans-serif', size: 10 } } } }
-                }
-            });
-        }
-
-        function saveIndicatorData(e) {
-            e.preventDefault();
-            const name = document.getElementById('form-indicator-name').value;
-            const quarter = document.getElementById('form-quarter').value;
-            const val = parseFloat(document.getElementById('form-value').value);
-            const target = parseFloat(document.getElementById('form-target').value);
-            const direction = document.getElementById('form-direction').value;
-            const notes = document.getElementById('form-notes').value;
-
-            let ind = state.indicators.find(i => i.name === name);
-            if (ind) {
-                let oldVal = quarter === 'Q1' ? ind.q1 : quarter === 'Q2' ? ind.q2 : quarter === 'Q3' ? ind.q3 : ind.q4;
-                if (quarter === 'Q1') ind.q1 = val;
-                if (quarter === 'Q2') ind.q2 = val;
-                if (quarter === 'Q3') ind.q3 = val;
-                if (quarter === 'Q4') ind.q4 = val;
-                ind.target = target;
-                ind.direction = direction;
-                ind.notes = notes;
-
-                localStorage.setItem('hospital_indicators', JSON.stringify(state.indicators));
-                logAudit(state.currentUser.name, `تعديل مؤشر (${name})`, `تحديث ${quarter} من ${oldVal} إلى ${val}`);
-                
-                alert('تم حفظ البيانات وتحديث لوحة المؤشرات والرسوم البيانية بنجاح!');
-                switchTab('dashboard');
-            }
-        }
-
-        function editIndicatorPrompt(indName) {
-            switchTab('data-entry');
-            document.getElementById('form-indicator-name').value = indName;
-            let ind = state.indicators.find(i => i.name === indName);
-            if (ind) {
-                document.getElementById('form-target').value = ind.target;
-                document.getElementById('form-direction').value = ind.direction;
-                document.getElementById('form-value').value = ind.q4;
-                document.getElementById('form-quarter').value = 'Q4';
-                document.getElementById('form-notes').value = ind.notes || '';
-            }
-        }
-
-        function resetEntryForm() {
-            document.getElementById('indicator-form').reset();
-        }
-
-        function logAudit(user, action, details) {
-            const now = new Date();
-            const timeStr = now.toISOString().slice(0, 10) + ' ' + now.toTimeString().slice(0, 5);
-            state.auditLogs.unshift({ user, action, details, time: timeStr });
-            localStorage.setItem('hospital_audit', JSON.stringify(state.auditLogs));
-            renderAuditLog();
-        }
-
-        function renderAuditLog() {
-            let html = '';
-            state.auditLogs.forEach(log => {
-                html += `
-                    <tr class="hover:bg-slate-50">
-                        <td class="py-2 px-3 font-bold text-sky-900">${log.user}</td>
-                        <td class="py-2 px-3 font-semibold text-slate-700">${log.action}</td>
-                        <td class="py-2 px-3 text-slate-600">${log.details}</td>
-                        <td class="py-2 px-3 text-[11px] text-slate-400">${log.time}</td>
-                    </tr>
-                `;
-            });
-            document.getElementById('audit-table-body').innerHTML = html;
-        }
-
-        function renderUsersTable() {
-            let html = '';
-            state.usersList.forEach((u, idx) => {
-                html += `
-                    <tr class="hover:bg-slate-50">
-                        <td class="py-2.5 px-3 font-bold text-slate-800">${u.name} <span class="text-[10px] text-slate-400 block">${u.username}</span></td>
-                        <td class="py-2.5 px-3"><span class="bg-sky-50 text-sky-800 px-2 py-0.5 rounded text-[11px] font-semibold">${u.role}</span></td>
-                        <td class="py-2.5 px-3 text-center">${u.active ? '<span class="text-emerald-700 font-bold">نشط</span>' : '<span class="text-rose-600 font-bold">معطل</span>'}</td>
-                        <td class="py-2.5 px-3 text-center">
-                            <button onclick="toggleUserStatus(${idx})" class="text-xs text-sky-700 hover:underline font-bold">تغيير الحالة</button>
-                        </td>
-                    </tr>
-                `;
-            });
-            document.getElementById('users-table-body').innerHTML = html;
-        }
-
-        function toggleUserStatus(idx) {
-            state.usersList[idx].active = !state.usersList[idx].active;
-            localStorage.setItem('hospital_users', JSON.stringify(state.usersList));
-            renderUsersTable();
-            logAudit(state.currentUser.name, "تغيير حالة مستخدم", `تم تعديل حالة المستخدم ${state.usersList[idx].name}`);
-        }
-
-        function openNewUserModal() {
-            let uname = prompt("أدخل المعرف (Username):");
-            if (!uname) return;
-            let name = prompt("أدخل الاسم الكامل:");
-            let role = prompt("أدخل الدور (Admin / Performance Manager / Data Entry):", "Data Entry");
-            state.usersList.push({ username: uname, name: name || uname, role: role || "Data Entry", active: true });
-            localStorage.setItem('hospital_users', JSON.stringify(state.usersList));
-            renderUsersTable();
-            logAudit(state.currentUser.name, "إضافة مستخدم", `تم إنشاء المستخدم ${name || uname}`);
-            alert('تمت إضافة المستخدم بنجاح!');
-        }
-
-        function exportReport() {
-            let csv = "المؤشر,السنة,Q1,Q2,Q3,Q4,المستهدف,الاتجاه,ملاحظات\n";
-            state.indicators.forEach(i => {
-                csv += `"${i.name}",2026,${i.q1},${i.q2},${i.q3},${i.q4},${i.target},${i.direction},"${i.notes || ''}"\n`;
-            });
-            let blob = new Blob(["\ufeff" + csv], { type: 'text/csv;charset=utf-8;' });
-            let link = document.createElement("a");
-            link.href = URL.createObjectURL(blob);
-            link.download = "Hospital_KPIs_Q_Report_2026.csv";
-            link.click();
-        }
-    </script>
 </body>
 </html>
