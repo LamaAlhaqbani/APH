@@ -11,9 +11,9 @@
             theme: {
                 extend: {
                     colors: {
-                        medical: {
-                            50: '#f0f4f8',
-                            100: '#d9e2ec',
+                        executive: {
+                            50: '#f4f8fb',
+                            100: '#e1edf5',
                             600: '#0284c7',
                             800: '#0369a1',
                             900: '#0f172a',
@@ -26,51 +26,65 @@
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { font-family: system-ui, -apple-system, sans-serif; }
+        body { font-family: system-ui, -apple-system, sans-serif; background-color: #f8fafc; }
+        .pro-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.01);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .pro-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 14px 25px -5px rgba(2, 132, 199, 0.08), 0 8px 10px -6px rgba(2, 132, 199, 0.05);
+            border-color: #bae6fd;
+        }
+        .header-gradient {
+            background: linear-gradient(135deg, #091e3a 0%, #0369a1 100%);
+        }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+<body class="text-slate-800 min-h-screen flex flex-col antialiased">
 
     <!-- MAIN APP WRAPPER -->
     <div id="main-app" class="flex flex-col min-h-screen">
         
         <!-- HEADER - EXECUTIVE NAVY BLUE -->
-        <header class="executive-header text-white border-b border-sky-950 sticky top-0 z-40 shadow-xl bg-gradient-to-r from-sky-950 via-sky-900 to-sky-950">
+        <header class="executive-header text-white border-b border-sky-900/50 sticky top-0 z-50 shadow-2xl header-gradient">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-24 flex items-center justify-between">
                 
-                <!-- شعار المستشفى والعنوان (محدث وبحجم احترافي وخلفية شفافة أنيقة) -->
+                <!-- شعار المستشفى والعنوان الاحترافي -->
                 <div class="flex items-center space-x-4 space-x-reverse">
                     <div class="w-16 h-16 bg-white/10 backdrop-blur-md rounded-2xl p-2 flex items-center justify-center border border-white/20 shadow-inner transition-transform hover:scale-105 duration-300">
                         <img src="logo.png" alt="شعار المستشفى" class="w-full h-full object-contain filter drop-shadow-md">
                     </div>
-                    <div class="border-r-2 border-sky-600/60 pr-4 mr-1">
-                        <h2 class="text-base sm:text-lg font-bold text-white tracking-wide leading-tight">مستشفى إرادة والصحة النفسية بأبها</h2>
-                        <p class="text-xs text-sky-300 font-medium mt-1">تجمع عسير الصحي - لوحة مؤشرات الأداء التنفيذية</p>
+                    <div class="border-r-2 border-sky-400/50 pr-4 mr-1">
+                        <h2 class="text-base sm:text-lg font-extrabold text-white tracking-wide leading-tight">مستشفى إرادة والصحة النفسية بأبها</h2>
+                        <p class="text-xs text-sky-200/90 font-medium mt-1">تجمع عسير الصحي - لوحة مؤشرات الأداء التنفيذية</p>
                     </div>
                 </div>
 
-                <!-- معلومات المستخدم وأزرار التنقل التفاعلية المُحسّنة -->
+                <!-- معلومات المستخدم وأزرار التنقل -->
                 <div class="flex items-center space-x-3 space-x-reverse">
                     
                     <!-- شريحة المستخدم -->
-                    <div id="user-badge" class="hidden sm:flex items-center bg-sky-900/80 px-3.5 py-1.5 rounded-full border border-sky-700/50 shadow-sm">
+                    <div id="user-badge" class="hidden sm:flex items-center bg-slate-900/40 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-sky-500/30 shadow-sm">
                         <i class="fa-solid fa-shield-halved ml-2 text-amber-400"></i>
                         <span id="current-user-display" class="text-xs font-semibold text-sky-100">عبد العزيز عبدالله آل زربه (Admin)</span>
                     </div>
 
-                    <!-- أزرار التنقل الرئيسية بتصميم فخم واحترافي -->
-                    <div class="flex items-center space-x-2 space-x-reverse bg-sky-950/60 p-1.5 rounded-2xl border border-sky-800/40 shadow-inner">
+                    <!-- أزرار التنقل الرئيسية -->
+                    <div class="flex items-center space-x-2 space-x-reverse bg-slate-950/40 backdrop-blur-md p-1.5 rounded-2xl border border-sky-500/20 shadow-inner">
                         <button onclick="enterPresentationMode()" class="px-3.5 py-2 text-xs font-bold rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white shadow-md transition-all duration-200 flex items-center gap-1.5 transform hover:-translate-y-0.5">
                             <i class="fa-solid fa-desktop ml-1"></i>
                             وضع العرض السريع
                         </button>
 
-                        <button onclick="switchTab('dashboard')" id="nav-btn-dashboard" class="px-3.5 py-2 text-xs font-bold rounded-xl bg-sky-800 text-white shadow transition-all duration-200 flex items-center gap-1.5">
+                        <button onclick="switchTab('dashboard')" id="nav-btn-dashboard" class="px-3.5 py-2 text-xs font-bold rounded-xl bg-sky-600 text-white shadow transition-all duration-200 flex items-center gap-1.5">
                             <i class="fa-solid fa-chart-pie ml-1"></i>
                             لوحة المؤشرات
                         </button>
 
-                        <button onclick="switchTab('data-entry')" id="nav-btn-entry" class="px-3.5 py-2 text-xs font-semibold rounded-xl text-sky-200 hover:bg-sky-800/50 hover:text-white transition-all duration-200 flex items-center gap-1.5">
+                        <button onclick="switchTab('data-entry')" id="nav-btn-entry" class="px-3.5 py-2 text-xs font-semibold rounded-xl text-sky-200 hover:bg-white/10 hover:text-white transition-all duration-200 flex items-center gap-1.5">
                             <i class="fa-solid fa-pen-to-square ml-1"></i>
                             إدخال وتعديل البيانات
                         </button>
@@ -81,22 +95,216 @@
         </header>
 
         <!-- محتوى لوحة المؤشرات الرئيسي -->
-        <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <!-- بطاقة إحصائية تجريبية كمثال -->
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
-                    <div class="flex items-center justify-between mb-4">
-                        <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">إجمالي المؤشرات النشطة</span>
-                        <div class="w-10 h-10 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center font-bold">
+        <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 space-y-6">
+            
+            <!-- شريط الفلاتر والتحكم -->
+            <div class="pro-card p-4 rounded-2xl flex flex-wrap items-center justify-between gap-4">
+                <div class="flex items-center space-x-3 space-x-reverse">
+                    <span class="text-xs font-bold text-slate-600 bg-slate-100 px-3.5 py-2 rounded-xl border border-slate-200 flex items-center gap-1.5">
+                        <i class="fa-solid fa-calendar-days text-sky-600"></i> السنة: <span class="text-slate-900 font-extrabold">2026</span>
+                    </span>
+                    <span class="text-xs font-bold text-slate-600 bg-slate-100 px-3.5 py-2 rounded-xl border border-slate-200 flex items-center gap-1.5">
+                        <i class="fa-solid fa-filter text-sky-600"></i> الفترات: <span class="text-slate-900 font-extrabold">جميع الأرباع</span>
+                    </span>
+                </div>
+                <div class="flex items-center space-x-2 space-x-reverse">
+                    <button class="px-4 py-2 text-xs font-bold bg-sky-50 text-sky-700 hover:bg-sky-100 rounded-xl border border-sky-200 transition-all shadow-sm flex items-center gap-1.5">
+                        <i class="fa-solid fa-rotate"></i> تحديث مباشر
+                    </button>
+                    <button class="px-4 py-2 text-xs font-bold bg-slate-900 text-white hover:bg-slate-800 rounded-xl transition-all shadow-sm flex items-center gap-1.5">
+                        <i class="fa-solid fa-download"></i> تصدير البيانات
+                    </button>
+                </div>
+            </div>
+
+            <!-- 1. المربعات الإحصائية الأربعة في الأعلى -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                
+                <div class="pro-card p-5 rounded-2xl relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-1.5 h-full bg-sky-600"></div>
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-xs font-bold text-slate-500 tracking-wider">إجمالي المؤشرات الفعالة</span>
+                        <div class="w-10 h-10 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center font-bold shadow-sm">
                             <i class="fa-solid fa-chart-line"></i>
                         </div>
                     </div>
-                    <div class="text-2xl font-black text-slate-900">24 مؤشراً</div>
-                    <div class="text-xs text-emerald-600 font-medium mt-1 flex items-center gap-1">
-                        <i class="fa-solid fa-arrow-up"></i> تحديث مستمر للأداء
+                    <div class="text-3xl font-black text-slate-900">14</div>
+                    <div class="text-xs text-sky-600 font-semibold mt-1 flex items-center gap-1">
+                        <i class="fa-solid fa-circle-info"></i> تغطي الملفات الإكلينيكية والتشغيلية
                     </div>
                 </div>
+
+                <div class="pro-card p-5 rounded-2xl relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-1.5 h-full bg-emerald-500"></div>
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-xs font-bold text-slate-500 tracking-wider">حقق المستهدف (Target)</span>
+                        <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold shadow-sm">
+                            <i class="fa-solid fa-circle-check"></i>
+                        </div>
+                    </div>
+                    <div class="text-3xl font-black text-slate-900">14</div>
+                    <div class="text-xs text-emerald-600 font-semibold mt-1 flex items-center gap-1">
+                        <i class="fa-solid fa-check"></i> أداء ضمن المستوى المطلوب
+                    </div>
+                </div>
+
+                <div class="pro-card p-5 rounded-2xl relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-1.5 h-full bg-amber-500"></div>
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-xs font-bold text-slate-500 tracking-wider">يحتاج متابعة وتدخل</span>
+                        <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center font-bold shadow-sm">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        </div>
+                    </div>
+                    <div class="text-3xl font-black text-slate-900">0</div>
+                    <div class="text-xs text-amber-600 font-semibold mt-1 flex items-center gap-1">
+                        <i class="fa-solid fa-clock"></i> قريب من الحد المستهدف
+                    </div>
+                </div>
+
+                <div class="pro-card p-5 rounded-2xl relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-1.5 h-full bg-rose-500"></div>
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-xs font-bold text-slate-500 tracking-wider">لم يتحقق المستهدف</span>
+                        <div class="w-10 h-10 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center font-bold shadow-sm">
+                            <i class="fa-solid fa-circle-xmark"></i>
+                        </div>
+                    </div>
+                    <div class="text-3xl font-black text-slate-900">0</div>
+                    <div class="text-xs text-rose-600 font-semibold mt-1 flex items-center gap-1">
+                        <i class="fa-solid fa-triangle-exclamation"></i> يتطلب خطة تصحيحية عاجلة
+                    </div>
+                </div>
+
             </div>
+
+            <!-- 2. قسم الرسوم البيانية التفاعلية في المنتصف -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                
+                <!-- الرسم البياني الأول -->
+                <div class="pro-card p-6 rounded-2xl">
+                    <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
+                        <h3 class="text-sm font-extrabold text-slate-900 flex items-center gap-2">
+                            <i class="fa-solid fa-chart-area text-sky-600"></i> اتجاه أداء تجربة المريض والزائر السري
+                        </h3>
+                        <span class="text-xs text-sky-700 bg-sky-50 px-2.5 py-1 rounded-lg font-bold border border-sky-100">تحليل زمني</span>
+                    </div>
+                    <div class="h-64 flex items-center justify-center bg-slate-50/80 rounded-xl border border-dashed border-slate-200 text-slate-400 text-xs font-semibold">
+                        [منطقة الرسم البياني التفاعلي للاتجاهات]
+                    </div>
+                </div>
+
+                <!-- الرسم البياني الثاني -->
+                <div class="pro-card p-6 rounded-2xl">
+                    <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
+                        <h3 class="text-sm font-extrabold text-slate-900 flex items-center gap-2">
+                            <i class="fa-solid fa-chart-column text-sky-600"></i> مقارنة أداء أهم المؤشرات عبر الأرباع (Q1 - Q4)
+                        </h3>
+                        <span class="text-xs text-sky-700 bg-sky-50 px-2.5 py-1 rounded-lg font-bold border border-sky-100">مقارنة أداء</span>
+                    </div>
+                    <div class="h-64 flex items-center justify-center bg-slate-50/80 rounded-xl border border-dashed border-slate-200 text-slate-400 text-xs font-semibold">
+                        [منطقة الرسم البياني بالأعمدة للأرباع]
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- 3. قسم المؤشرات المعتمدة للمستشفى في الأسفل -->
+            <div class="space-y-4 pt-2">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-base font-extrabold text-slate-900 border-r-4 border-sky-600 pr-3 flex items-center gap-2">
+                        المؤشرات الأربعة المعتمدة للمستشفى
+                    </h3>
+                    <span class="text-xs text-slate-600 bg-white px-3.5 py-1.5 rounded-xl border border-slate-200 font-semibold shadow-sm">
+                        <i class="fa-solid fa-circle-dot text-emerald-500 ml-1"></i> محدثة فورياً
+                    </span>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    
+                    <!-- مؤشر 1 -->
+                    <div class="pro-card p-5 rounded-2xl">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-sm font-bold text-slate-900">مؤشر أداء 937</span>
+                            <span class="text-xs font-bold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200 flex items-center gap-1.5">
+                                <i class="fa-solid fa-circle-check"></i> محقق
+                            </span>
+                        </div>
+                        <div class="flex items-baseline justify-between bg-slate-50/80 p-3.5 rounded-xl border border-slate-200/60 mb-3.5">
+                            <span class="text-2xl font-black text-slate-900">95.1</span>
+                            <span class="text-xs text-slate-500 font-semibold">المستهدف: <strong class="text-slate-900 text-sm">90 %</strong></span>
+                        </div>
+                        <div class="grid grid-cols-4 gap-2 text-center text-xs text-slate-700 bg-slate-100/70 p-2.5 rounded-xl font-medium">
+                            <div>Q1: <strong class="text-slate-900">92.5</strong></div>
+                            <div>Q2: <strong class="text-slate-900">94</strong></div>
+                            <div>Q3: <strong class="text-slate-900">93.2</strong></div>
+                            <div>Q4: <strong class="text-slate-900">95.1</strong></div>
+                        </div>
+                    </div>
+
+                    <!-- مؤشر 2 -->
+                    <div class="pro-card p-5 rounded-2xl">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-sm font-bold text-slate-900">مؤشر أداء تجربة المريض</span>
+                            <span class="text-xs font-bold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200 flex items-center gap-1.5">
+                                <i class="fa-solid fa-circle-check"></i> محقق
+                            </span>
+                        </div>
+                        <div class="flex items-baseline justify-between bg-slate-50/80 p-3.5 rounded-xl border border-slate-200/60 mb-3.5">
+                            <span class="text-2xl font-black text-slate-900">91</span>
+                            <span class="text-xs text-slate-500 font-semibold">المستهدف: <strong class="text-slate-900 text-sm">88 %</strong></span>
+                        </div>
+                        <div class="grid grid-cols-4 gap-2 text-center text-xs text-slate-700 bg-slate-100/70 p-2.5 rounded-xl font-medium">
+                            <div>Q1: <strong class="text-slate-900">85</strong></div>
+                            <div>Q2: <strong class="text-slate-900">89.2</strong></div>
+                            <div>Q3: <strong class="text-slate-900">90.5</strong></div>
+                            <div>Q4: <strong class="text-slate-900">91</strong></div>
+                        </div>
+                    </div>
+
+                    <!-- مؤشر 3 -->
+                    <div class="pro-card p-5 rounded-2xl">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-sm font-bold text-slate-900">مؤشر أداء السلامة الدوائية</span>
+                            <span class="text-xs font-bold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200 flex items-center gap-1.5">
+                                <i class="fa-solid fa-circle-check"></i> محقق
+                            </span>
+                        </div>
+                        <div class="flex items-baseline justify-between bg-slate-50/80 p-3.5 rounded-xl border border-slate-200/60 mb-3.5">
+                            <span class="text-2xl font-black text-slate-900">99</span>
+                            <span class="text-xs text-slate-500 font-semibold">المستهدف: <strong class="text-slate-900 text-sm">98 %</strong></span>
+                        </div>
+                        <div class="grid grid-cols-4 gap-2 text-center text-xs text-slate-700 bg-slate-100/70 p-2.5 rounded-xl font-medium">
+                            <div>Q1: <strong class="text-slate-900">98</strong></div>
+                            <div>Q2: <strong class="text-slate-900">98.5</strong></div>
+                            <div>Q3: <strong class="text-slate-900">99</strong></div>
+                            <div>Q4: <strong class="text-slate-900">99</strong></div>
+                        </div>
+                    </div>
+
+                    <!-- مؤشر 4 -->
+                    <div class="pro-card p-5 rounded-2xl">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-sm font-bold text-slate-900">مؤشر أداء عينتي للمختبر</span>
+                            <span class="text-xs font-bold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200 flex items-center gap-1.5">
+                                <i class="fa-solid fa-circle-check"></i> محقق
+                            </span>
+                        </div>
+                        <div class="flex items-baseline justify-between bg-slate-50/80 p-3.5 rounded-xl border border-slate-200/60 mb-3.5">
+                            <span class="text-2xl font-black text-slate-900">95.8</span>
+                            <span class="text-xs text-slate-500 font-semibold">المستهدف: <strong class="text-slate-900 text-sm">95 %</strong></span>
+                        </div>
+                        <div class="grid grid-cols-4 gap-2 text-center text-xs text-slate-700 bg-slate-100/70 p-2.5 rounded-xl font-medium">
+                            <div>Q1: <strong class="text-slate-900">95</strong></div>
+                            <div>Q2: <strong class="text-slate-900">95.2</strong></div>
+                            <div>Q3: <strong class="text-slate-900">95.5</strong></div>
+                            <div>Q4: <strong class="text-slate-900">95.8</strong></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
         </main>
         
     </div>
