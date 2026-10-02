@@ -18,15 +18,12 @@
                             800: '#0369a1',
                             900: '#0f172a',
                         }
-                    },
-                    fontFamily: {
-                        janna: ['"Janna LT"', '"Cairo"', 'sans-serif'],
                     }
                 }
             }
         }
     </script>
-    <!-- Google Fonts / Janna LT Support -->
+    <!-- Google Fonts (Janna LT Style via Cairo) -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -64,7 +61,7 @@
                 
                 <!-- شعار المستشفى والعنوان الاحترافي -->
                 <div class="flex items-center space-x-4 space-x-reverse">
-                    <div class="w-16 h-16 bg-white/10 backdrop-blur-md rounded-2xl p-2 flex items-center justify-center border border-white/20 shadow-inner transition-transform hover:scale-105 duration-300">
+                    <div class="w-16 h-16 bg-white/15 backdrop-blur-md rounded-2xl p-2 flex items-center justify-center border border-white/20 shadow-inner transition-transform hover:scale-105 duration-300">
                         <img src="logo.png" alt="شعار المستشفى" class="w-full h-full object-contain filter drop-shadow-md">
                     </div>
                     <div class="border-r-2 border-sky-400/50 pr-4 mr-1">
@@ -76,8 +73,8 @@
                 <!-- معلومات المستخدم وأزرار التنقل -->
                 <div class="flex items-center space-x-3 space-x-reverse">
                     
-                    <!-- شريحة المستخدم -->
-                    <div id="user-badge" class="hidden sm:flex items-center bg-slate-900/40 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-sky-500/30 shadow-sm">
+                    <!-- شريحة المستخدم الديناميكية -->
+                    <div id="user-badge" class="hidden sm:flex items-center bg-slate-900/50 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-sky-500/30 shadow-sm cursor-pointer" onclick="promptChangeUser()" title="انقر لتغيير اسم المستخدم">
                         <i class="fa-solid fa-shield-halved ml-2 text-amber-400"></i>
                         <span id="current-user-display" class="text-xs font-semibold text-sky-100">عبد العزيز عبدالله آل زربه (Admin)</span>
                     </div>
@@ -104,10 +101,10 @@
             </div>
         </header>
 
-        <!-- المحتوى الرئيسي (لوحة المؤشرات + تبويب إدخال البيانات) -->
+        <!-- المحتوى الرئيسي للوحة -->
         <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 space-y-6">
             
-            <!-- تبويب لوحة المؤشرات (Dashboard Tab) -->
+            <!-- ================= التبويب الأول: لوحة المؤشرات ================= -->
             <div id="tab-content-dashboard" class="space-y-6">
                 
                 <!-- شريط الفلاتر والتحكم -->
@@ -121,18 +118,17 @@
                         </span>
                     </div>
                     <div class="flex items-center space-x-2 space-x-reverse">
-                        <button class="px-4 py-2 text-xs font-bold bg-sky-50 text-sky-700 hover:bg-sky-100 rounded-xl border border-sky-200 transition-all shadow-sm flex items-center gap-1.5">
+                        <button onclick="location.reload()" class="px-4 py-2 text-xs font-bold bg-sky-50 text-sky-700 hover:bg-sky-100 rounded-xl border border-sky-200 transition-all shadow-sm flex items-center gap-1.5">
                             <i class="fa-solid fa-rotate"></i> تحديث مباشر
                         </button>
-                        <button class="px-4 py-2 text-xs font-bold bg-slate-900 text-white hover:bg-slate-800 rounded-xl transition-all shadow-sm flex items-center gap-1.5">
+                        <button onclick="alert('تم تجهيز التقرير للتصدير بنجاح')" class="px-4 py-2 text-xs font-bold bg-slate-900 text-white hover:bg-slate-800 rounded-xl transition-all shadow-sm flex items-center gap-1.5">
                             <i class="fa-solid fa-download"></i> تصدير البيانات
                         </button>
                     </div>
                 </div>
 
-                <!-- 1. المربعات الإحصائية الأربعة في الأعلى -->
+                <!-- المربعات الإحصائية الأربعة العليا -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    
                     <div class="pro-card p-5 rounded-2xl relative overflow-hidden text-right">
                         <div class="absolute top-0 right-0 w-1.5 h-full bg-sky-600"></div>
                         <div class="flex items-center justify-between mb-3">
@@ -142,9 +138,7 @@
                             </div>
                         </div>
                         <div class="text-3xl font-black text-slate-900">14</div>
-                        <div class="text-xs text-sky-600 font-semibold mt-1 flex items-center gap-1">
-                            <i class="fa-solid fa-circle-info"></i> تغطي الملفات الإكلينيكية والتشغيلية
-                        </div>
+                        <div class="text-xs text-sky-600 font-semibold mt-1">تغطي الملفات الإكلينيكية والتشغيلية</div>
                     </div>
 
                     <div class="pro-card p-5 rounded-2xl relative overflow-hidden text-right">
@@ -156,9 +150,7 @@
                             </div>
                         </div>
                         <div class="text-3xl font-black text-slate-900">14</div>
-                        <div class="text-xs text-emerald-600 font-semibold mt-1 flex items-center gap-1">
-                            <i class="fa-solid fa-check"></i> أداء ضمن المستوى المطلوب
-                        </div>
+                        <div class="text-xs text-emerald-600 font-semibold mt-1">أداء ضمن المستوى المطلوب</div>
                     </div>
 
                     <div class="pro-card p-5 rounded-2xl relative overflow-hidden text-right">
@@ -170,9 +162,7 @@
                             </div>
                         </div>
                         <div class="text-3xl font-black text-slate-900">0</div>
-                        <div class="text-xs text-amber-600 font-semibold mt-1 flex items-center gap-1">
-                            <i class="fa-solid fa-clock"></i> قريب من الحد المستهدف
-                        </div>
+                        <div class="text-xs text-amber-600 font-semibold mt-1">قريب من الحد المستهدف</div>
                     </div>
 
                     <div class="pro-card p-5 rounded-2xl relative overflow-hidden text-right">
@@ -184,16 +174,12 @@
                             </div>
                         </div>
                         <div class="text-3xl font-black text-slate-900">0</div>
-                        <div class="text-xs text-rose-600 font-semibold mt-1 flex items-center gap-1">
-                            <i class="fa-solid fa-triangle-exclamation"></i> يتطلب خطة تصحيحية عاجلة
-                        </div>
+                        <div class="text-xs text-rose-600 font-semibold mt-1">يتطلب خطة تصحيحية عاجلة</div>
                     </div>
-
                 </div>
 
-                <!-- 2. قسم الرسوم البيانية التفاعلية في المنتصف -->
+                <!-- الرسوم البيانية في المنتصف -->
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    
                     <div class="pro-card p-6 rounded-2xl text-right">
                         <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
                             <h3 class="text-sm font-extrabold text-slate-900 flex items-center gap-2">
@@ -202,36 +188,35 @@
                             <span class="text-xs text-sky-700 bg-sky-50 px-2.5 py-1 rounded-lg font-bold border border-sky-100">تحليل زمني</span>
                         </div>
                         <div class="h-64 flex items-center justify-center bg-slate-50/80 rounded-xl border border-dashed border-slate-200 text-slate-400 text-xs font-semibold">
-                            [منطقة الرسم البياني التفاعلي للاتجاهات - Line Chart]
+                            [رسم بياني تفاعلي لاتجاهات الأداء المتميزة]
                         </div>
                     </div>
 
                     <div class="pro-card p-6 rounded-2xl text-right">
                         <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
                             <h3 class="text-sm font-extrabold text-slate-900 flex items-center gap-2">
-                                <i class="fa-solid fa-chart-column text-sky-600"></i> مقارنة أداء أهم المؤشرات عبر الأرباع (Q1 - Q4)
+                                <i class="fa-solid fa-chart-column text-sky-600"></i> مقارنة أداء المؤشرات عبر الأرباع (Q1 - Q4)
                             </h3>
                             <span class="text-xs text-sky-700 bg-sky-50 px-2.5 py-1 rounded-lg font-bold border border-sky-100">مقارنة أداء</span>
                         </div>
                         <div class="h-64 flex items-center justify-center bg-slate-50/80 rounded-xl border border-dashed border-slate-200 text-slate-400 text-xs font-semibold">
-                            [منطقة الرسم البياني بالأعمدة للأرباع - Bar Chart]
+                            [رسم بياني أعمدة مقارنة الأرباع السنوية]
                         </div>
                     </div>
-
                 </div>
 
-                <!-- 3. قسم المؤشرات المعتمدة والجدول التفصيلي في الأسفل -->
+                <!-- المؤشرات المعتمدة في الأسفل -->
                 <div class="space-y-4 pt-2">
                     <div class="flex items-center justify-between">
                         <h3 class="text-base font-extrabold text-slate-900 border-r-4 border-sky-600 pr-3 flex items-center gap-2">
-                            المؤشرات المعتمدة للمستشفى والتقرير التفصيلي
+                            المؤشرات المعتمدة للمستشفى
                         </h3>
                         <span class="text-xs text-slate-600 bg-white px-3.5 py-1.5 rounded-xl border border-slate-200 font-semibold shadow-sm">
                             <i class="fa-solid fa-circle-dot text-emerald-500 ml-1"></i> محدثة فورياً
                         </span>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5" id="indicators-grid">
                         
                         <!-- مؤشر 1 -->
                         <div class="pro-card p-5 rounded-2xl text-right">
@@ -242,7 +227,7 @@
                                 </span>
                             </div>
                             <div class="flex items-baseline justify-between bg-slate-50/80 p-3.5 rounded-xl border border-slate-200/60 mb-3.5">
-                                <span class="text-2xl font-black text-slate-900">95.1</span>
+                                <span class="text-2xl font-black text-slate-900" id="val-ind-1">95.1</span>
                                 <span class="text-xs text-slate-500 font-semibold">المستهدف: <strong class="text-slate-900 text-sm">90 %</strong></span>
                             </div>
                             <div class="grid grid-cols-4 gap-2 text-center text-xs text-slate-700 bg-slate-100/70 p-2.5 rounded-xl font-medium">
@@ -262,7 +247,7 @@
                                 </span>
                             </div>
                             <div class="flex items-baseline justify-between bg-slate-50/80 p-3.5 rounded-xl border border-slate-200/60 mb-3.5">
-                                <span class="text-2xl font-black text-slate-900">91</span>
+                                <span class="text-2xl font-black text-slate-900" id="val-ind-2">91</span>
                                 <span class="text-xs text-slate-500 font-semibold">المستهدف: <strong class="text-slate-900 text-sm">88 %</strong></span>
                             </div>
                             <div class="grid grid-cols-4 gap-2 text-center text-xs text-slate-700 bg-slate-100/70 p-2.5 rounded-xl font-medium">
@@ -282,7 +267,7 @@
                                 </span>
                             </div>
                             <div class="flex items-baseline justify-between bg-slate-50/80 p-3.5 rounded-xl border border-slate-200/60 mb-3.5">
-                                <span class="text-2xl font-black text-slate-900">99</span>
+                                <span class="text-2xl font-black text-slate-900" id="val-ind-3">99</span>
                                 <span class="text-xs text-slate-500 font-semibold">المستهدف: <strong class="text-slate-900 text-sm">98 %</strong></span>
                             </div>
                             <div class="grid grid-cols-4 gap-2 text-center text-xs text-slate-700 bg-slate-100/70 p-2.5 rounded-xl font-medium">
@@ -302,7 +287,7 @@
                                 </span>
                             </div>
                             <div class="flex items-baseline justify-between bg-slate-50/80 p-3.5 rounded-xl border border-slate-200/60 mb-3.5">
-                                <span class="text-2xl font-black text-slate-900">95.8</span>
+                                <span class="text-2xl font-black text-slate-900" id="val-ind-4">95.8</span>
                                 <span class="text-xs text-slate-500 font-semibold">المستهدف: <strong class="text-slate-900 text-sm">95 %</strong></span>
                             </div>
                             <div class="grid grid-cols-4 gap-2 text-center text-xs text-slate-700 bg-slate-100/70 p-2.5 rounded-xl font-medium">
@@ -318,40 +303,40 @@
 
             </div>
 
-            <!-- تبويب إدخال وتعديل البيانات (Data Entry Tab - مخفي افتراضياً ويظهر عند الضغط على الزر) -->
+            <!-- ================= التبويب الثاني: إدخال وتعديل البيانات ================= -->
             <div id="tab-content-entry" class="hidden space-y-6">
                 <div class="pro-card p-6 rounded-2xl text-right space-y-4">
                     <h3 class="text-base font-extrabold text-slate-900 border-r-4 border-sky-600 pr-3">لوحة تحكم إدخال وتعديل البيانات التنفيذية</h3>
-                    <p class="text-xs text-slate-600">يمكنك من خلال هذه الواجهة تحديث قيم المؤشرات والأرباع بشكل فوري لتنعكس مباشرة على لوحة المؤشرات التنفيذية.</p>
+                    <p class="text-xs text-slate-600">يمكنك من خلال هذه الواجهة تحديث قيمة أي مؤشر بشكل فوري لتنعكس على اللوحة التنفيذية.</p>
                     
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4">
                         <div class="space-y-1">
                             <label class="text-xs font-bold text-slate-700">اختر المؤشر:</label>
-                            <select class="w-full p-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl">
-                                <option>مؤشر أداء 937</option>
-                                <option>مؤشر أداء تجربة المريض</option>
-                                <option>مؤشر أداء السلامة الدوائية</option>
-                                <option>مؤشر أداء عينتي للمختبر</option>
+                            <select id="select-indicator" class="w-full p-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl">
+                                <option value="1">مؤشر أداء 937</option>
+                                <option value="2">مؤشر أداء تجربة المريض</option>
+                                <option value="3">مؤشر أداء السلامة الدوائية</option>
+                                <option value="4">مؤشر أداء عينتي للمختبر</option>
                             </select>
                         </div>
                         <div class="space-y-1">
                             <label class="text-xs font-bold text-slate-700">الفترة (الربع):</label>
-                            <select class="w-full p-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl">
-                                <option>الربع الأول (Q1)</option>
-                                <option>الربع الثاني (Q2)</option>
-                                <option>الربع الثالث (Q3)</option>
-                                <option>الربع الرابع (Q4)</option>
+                            <select id="select-quarter" class="w-full p-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl">
+                                <option value="Q4">الربع الرابع (Q4)</option>
+                                <option value="Q3">الربع الثالث (Q3)</option>
+                                <option value="Q2">الربع الثاني (Q2)</option>
+                                <option value="Q1">الربع الأول (Q1)</option>
                             </select>
                         </div>
                         <div class="space-y-1">
                             <label class="text-xs font-bold text-slate-700">القيمة الجديدة:</label>
-                            <input type="text" placeholder="أدخل القيمة العددية..." class="w-full p-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl">
+                            <input type="text" id="input-new-value" placeholder="مثال: 96.5" class="w-full p-2.5 text-xs bg-slate-50 border border-slate-200 rounded-xl">
                         </div>
                     </div>
                     
                     <div class="pt-4 flex justify-end">
-                        <button class="px-5 py-2.5 text-xs font-bold bg-sky-600 text-white rounded-xl shadow hover:bg-sky-500 transition-all flex items-center gap-2">
-                            <i class="fa-solid fa-floppy-disk"></i> حفظ وتحديث البيانات
+                        <button onclick="saveIndicatorData()" class="px-5 py-2.5 text-xs font-bold bg-sky-600 text-white rounded-xl shadow hover:bg-sky-500 transition-all flex items-center gap-2">
+                            <i class="fa-solid fa-floppy-disk"></i> حفظ وتحديث البيانات فوراً
                         </button>
                     </div>
                 </div>
@@ -361,8 +346,9 @@
         
     </div>
 
-    <!-- JavaScript للتبديل بين التبويبات بسلاسة -->
+    <!-- دوال JavaScript البرمجية التفاعلية -->
     <script>
+        // التبديل بين التبويبات
         function switchTab(tabName) {
             const dashTab = document.getElementById('tab-content-dashboard');
             const entryTab = document.getElementById('tab-content-entry');
@@ -382,8 +368,35 @@
             }
         }
 
+        // تغيير اسم المستخدم وصلاحياته بـ Prompt ديناميكي
+        function promptChangeUser() {
+            const newName = prompt("أدخل اسم المسؤول الجديد وصلاحيته:", "عبد العزيز عبدالله آل زربه (Admin)");
+            if (newName && newName.trim() !== "") {
+                document.getElementById('current-user-display').innerText = newName;
+            }
+        }
+
+        // وضع العرض السريع التنفيذي
         function enterPresentationMode() {
-            alert('تم تفعيل وضع العرض السريع التنفيذي.');
+            alert('تم تفعيل وضع العرض السريع التنفيذي بنجاح.');
+        }
+
+        // دفظ وتحديث البيانات التفاعلية
+        function saveIndicatorData() {
+            const indId = document.getElementById('select-indicator').value;
+            const newVal = document.getElementById('input-new-value').value;
+            
+            if(!newVal) {
+                alert('الرجاء إدخال القيمة الجديدة أولاً.');
+                return;
+            }
+
+            const targetElement = document.getElementById('val-ind-' + indId);
+            if(targetElement) {
+                targetElement.innerText = newVal;
+                alert('تم تحديث قيمة المؤشر بنجاح والانتقال للوحة المؤشرات.');
+                switchTab('dashboard');
+            }
         }
     </script>
 </body>
